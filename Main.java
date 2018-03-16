@@ -13,14 +13,13 @@ public class Main {
 
     public static void main(String[] args) {
 
+        // Create the frame
         JFrame frame = new JFrame("Pong");
-        //JPanel panel = new JPanel();
-        //frame.setLayout(new FlowLayout());
-        //frame.add(new Pong("", ""));
         frame.setSize(WIDTH, HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
+        // Create the Pong game and create the Paddles and the Ball
         Pong pong = new Pong();
         Paddle paddle1 = new Paddle();
         frame.add(paddle1);
@@ -45,7 +44,6 @@ public class Main {
         KeyListener listener = new PaddleListener();
         paddle1.addKeyListener(listener);
         paddle1.setFocusable(true);
-
 
         frame.setVisible(true);
     }
