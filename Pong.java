@@ -36,7 +36,7 @@ public class Pong extends JPanel {
 
     /**
      * Gets player 1's score
-     * @return
+     * @return    the score
      */
     public int getScore1() {
         return score1;
@@ -44,7 +44,7 @@ public class Pong extends JPanel {
 
     /**
      * Gets player 2's score
-     * @return
+     * @return    the score
      */
     public int getScore2() {
         return score2;
