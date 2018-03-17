@@ -31,15 +31,6 @@ public class Ball extends JComponent {
     }
 
     /**
-     * Repaints the Ball object (called when Ball is given new coordinates)
-     * @param g
-     */
-    public void repaint(Graphics g) {
-        g.drawOval(xPos, yPos, DIAMETER, DIAMETER); // the pong ball
-        g.fillOval(xPos, yPos, DIAMETER, DIAMETER);
-    }
-
-    /**
      * Gets the Ball's current X coordinate
      * @return    X coordinate
      */

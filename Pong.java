@@ -1,6 +1,10 @@
 package Pong;
 
 import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import static java.awt.event.KeyEvent.*;
 
 public class Pong extends JPanel {
 
@@ -12,10 +16,9 @@ public class Pong extends JPanel {
      * Creates a new Pong object which stores the names of the two player and their respective scores
      */
     public Pong() {
-        player1 = JOptionPane.showInputDialog("Enter player 1: ");
-        player2 = JOptionPane.showInputDialog("Enter player 2: ");
         score1 = 0;
         score2 = 0;
+
     }
 
     /**
