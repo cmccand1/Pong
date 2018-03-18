@@ -1,11 +1,6 @@
 package Pong;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import static java.awt.event.KeyEvent.*;
 
 public class Main {
 
@@ -17,10 +12,11 @@ public class Main {
 
         // Create the frame
         JFrame frame = new JFrame("Pong");
-        Paddle paddle1 = new Paddle(5, 345);
+        Paddle paddle1 = new Paddle(5, 345, "left");
+        Paddle paddle2 = new Paddle(775, 345, "right");
         frame.add(paddle1);
-        //Paddle paddle2 = new Paddle(775, 345);
-        //frame.add(paddle2);
+        frame.add(paddle2);
+        //System.out.println(Paddle.getPaddles().size());
 
         frame.setVisible(true);
         frame.setSize(WIDTH, HEIGHT);
