@@ -2,6 +2,7 @@ package Pong;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Ball extends JComponent {
 
@@ -9,6 +10,7 @@ public class Ball extends JComponent {
     private int SPEED; // TODO: make field final
     private int xPos;
     private int yPos;
+    private static ArrayList<Ball> ball = new ArrayList<>();
 
     /**
      * Constructor for the Ball object
@@ -18,6 +20,7 @@ public class Ball extends JComponent {
     public Ball(int x, int y) {
         xPos = x;
         yPos = y;
+        ball.add(this);
     }
 
     /**
@@ -26,7 +29,13 @@ public class Ball extends JComponent {
      */
     @Override
     public void paintComponent(Graphics g) {
-        g.drawOval(xPos, yPos, DIAMETER, DIAMETER); // the pong ball
+        super.paintComponent(g);
+        for (Ball b : ball) {
+            b.drawBall(g);
+        }
+    }
+
+    private void drawBall(Graphics g) {
         g.fillOval(xPos, yPos, DIAMETER, DIAMETER);
     }
 
@@ -62,6 +71,8 @@ public class Ball extends JComponent {
         yPos = y;
     }
 
-
+    public static ArrayList<Ball> getBall() {
+        return ball;
+    }
 
 }

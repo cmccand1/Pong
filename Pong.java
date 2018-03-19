@@ -1,12 +1,9 @@
 package Pong;
 
 import javax.swing.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
-import static java.awt.event.KeyEvent.*;
-
-public class Pong extends JPanel {
+public class Pong {
 
     private String player1, player2;
     private int score1;
@@ -18,7 +15,6 @@ public class Pong extends JPanel {
     public Pong() {
         score1 = 0;
         score2 = 0;
-
     }
 
     /**

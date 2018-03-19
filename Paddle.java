@@ -22,68 +22,67 @@ public class Paddle extends JComponent {
         xPos = x;
         yPos = y;
         whichPaddle = leftOrRightPaddle;
+        addKeyListener(listener);
+        setFocusable(true);
         paddles.add(this);
-        if (whichPaddle.equals("left")) {
-            addKeyListener(leftListener);
-            setFocusable(true);
-        }
-        else if (whichPaddle.equals("right")) {
-            addKeyListener(rightListener);
-            setFocusable(true);
-        }
     }
 
 
-
     /**
-     * Paints the Paddle object
+     * Iterates through the collection of Paddle objects and calls drawPaddle() on each one
      * @param g the Graphics object
      */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (Paddle paddle : paddles) {
-            paddle.drawPaddles(g);
+        for (Paddle p : paddles) {
+            p.drawPaddle(g);
         }
         
     }
 
-    public void drawPaddles(Graphics g) {
+    /**
+     * Draws a paddle
+     * @param g
+     */
+    private void drawPaddle(Graphics g) {
         final int PADDLE_WIDTH = 20;
-        final int PADDLE_HEIGHT = 110;
+        final int PADDLE_HEIGHT = 100;
         g.fillRect(xPos, yPos, PADDLE_WIDTH, PADDLE_HEIGHT);
     }
 
 
-    KeyListener leftListener = new LeftPaddleListener();
-    KeyListener rightListener = new RightPaddleListener();
-    class LeftPaddleListener implements KeyListener {
+    KeyListener listener = new PaddleListener();
+
+    class PaddleListener implements KeyListener {
 
         // Specify the Paddle behavior
         @Override
         public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == VK_DOWN) {
-                moveDown();
-            } else if (e.getKeyCode() == VK_UP) {
-                moveUp();
-            }
-        }
-        @Override
-        public void keyReleased(KeyEvent e) {}
-
-        @Override
-        public void keyTyped(KeyEvent e) {}
-    }
-
-    class RightPaddleListener implements KeyListener {
-
-        // Specify the Paddle behavior
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == VK_LEFT) {
-                moveDown();
+            if (e.getKeyCode() == VK_UP) {
+                for (Paddle p : getPaddles()) {
+                    if (p.getWhichPaddle().equals("left") && p.isInBounds("up")) {
+                        p.moveUp();
+                    }
+                }
+            } else if (e.getKeyCode() == VK_DOWN) {
+                for (Paddle p : getPaddles()) {
+                    if (p.getWhichPaddle().equals("left") && p.isInBounds("down")) {
+                        p.moveDown();
+                    }
+                }
+            } else if (e.getKeyCode() == VK_LEFT) {
+                for (Paddle p : getPaddles()) {
+                    if (p.getWhichPaddle().equals("right") && p.isInBounds("down")) {
+                        p.moveDown();
+                    }
+                }
             } else if (e.getKeyCode() == VK_RIGHT) {
-                moveUp();
+                for (Paddle p : getPaddles()) {
+                    if (p.getWhichPaddle().equals("right") && p.isInBounds("up")) {
+                        p.moveUp();
+                    }
+                }
             }
         }
         @Override
@@ -98,16 +97,28 @@ public class Paddle extends JComponent {
      * Moves the Paddle object up by a pre-specified amount and then repaints it
      */
     private void moveUp() {
-        yPos -= 35;
-        repaint();
+        yPos -= 20;
+        int i = 1;
+        for (Paddle p : getPaddles()) {
+            p.repaint();
+            System.out.println("p" + i + " Y-coord: " + p.paddleY());
+            i++;
+        }
+        System.out.println("-----------------------------");
     }
 
     /**
      * Moves the Paddle object down by a pre-specified amount and then repaints it
      */
     private void moveDown() {
-        yPos += 35;
-        repaint();
+        yPos += 20;
+        int i = 1;
+        for (Paddle p : getPaddles()) {
+            p.repaint();
+            System.out.println("p" + i + " Y-coord: " + p.paddleY());
+            i++;
+        }
+        System.out.println("-----------------------------");
     }
 
     /**
@@ -122,12 +133,38 @@ public class Paddle extends JComponent {
      * Gets the Paddle object's Y coordinate
      * @return    Y coordinate
      */
-    public int paddleY() {
+    private int paddleY() {
         return yPos;
     }
 
-    public static ArrayList<Paddle> getPaddles() {
+    /**
+     * Gets the collection of Paddles
+     * @return    An array list of Paddle objects
+     */
+    private static ArrayList<Paddle> getPaddles() {
         return paddles;
+    }
+
+    /**
+     * Gets whether the Paddle object is the left or right Paddle
+     * @return    'Left' if left Paddle, 'Right' if right Paddle
+     */
+    private String getWhichPaddle() {
+        return whichPaddle;
+    }
+
+    /**
+     * Checks if the Paddles are in the Frame
+     * @return    true if in-bounds, false otherwise
+     */
+    private boolean isInBounds(String moveDirection) {
+        if (moveDirection.equals("down")) {
+            return this.paddleY() <= 560;
+        } else if (moveDirection.equals("up")) {
+            return this.paddleY() >= 20;
+        } else {
+            return false;
+        }
     }
 
 
